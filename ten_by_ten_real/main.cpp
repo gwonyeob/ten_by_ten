@@ -1,9 +1,8 @@
 ﻿#include<iostream>
-#include<array> //배열
-#include<cstdlib> //난수 생성
+#include<array> 
+#include<cstdlib> 
 #include<ctime>
 #include<string>
-#include<tuple>
 using namespace std;
 
 int total_point;
@@ -11,19 +10,12 @@ array<array<string, 10>, 10> board;
 array<array<string, 10>, 10> the_board;
 array<array<string, 5>, 5> part;
 
-void tenbytengame();
-void draw_board(array<array<string, 10>, 10> board);
-void show_part(array<array<string, 5>, 5> part);
-array<array<string, 5>, 5>block(int n);
-tuple<int, int, int> create_part();
-void playing_game();
-void game_end(array<array<string, 10>, 10> board, array<array<string, 5>, 5> part);
 
-
-int main() {
-    tenbytengame();
-    playing_game();
-}
+struct rand_nums { //create_part -> return
+    int n1;
+    int n2;
+    int n3;
+};
 
 void tenbytengame() {
     for (int i = 0; i < 10; i++) {
@@ -235,28 +227,32 @@ array<array<string, 5>, 5>block(int n) {
     }
     return part;
 }
-tuple<int, int, int> create_part() {
-    int n1 = rand() % 19 + 1;
-    int n2 = rand() % 19 + 1;
-    int n3 = rand() % 19 + 1;
-    return make_tuple(n1, n2, n3);
+rand_nums create_part() {
+    rand_nums rd;
+    rd.n1 = rand() % 19 + 1;
+    rd.n2 = rand() % 19 + 1;
+    rd.n3 = rand() % 19 + 1;
+    return rd;
 }
-void playing_game()
-{
+void playing_game() {
     draw_board(the_board);
-    auto [n1, n2, n3] = create_part(); //c++버전 17
-    array<array<string, 5>, 5> part1 = block(n1);
+    rand_nums value = create_part();
+    array<array<string, 5>, 5> part1 = block(value.n1);
     cout << 1 << endl;
     show_part(part1);
-    array<array<string, 5>, 5> part2 = block(n2);
+    array<array<string, 5>, 5> part2 = block(value.n2);
     cout << 2 << endl;
     show_part(part2);
-    array<array<string, 5>, 5> part3 = block(n3);
+    array<array<string, 5>, 5> part3 = block(value.n3);
     cout << 3 << endl;
     show_part(part3);
 
 }
-void game_end(array<array<string, 10>, 10> board, array<array<string, 5>, 5> part)
-{
+void game_end(array<array<string, 10>, 10> board, array<array<string, 5>, 5> part) {
 
+}
+
+int main() {
+    tenbytengame();
+    playing_game();
 }
